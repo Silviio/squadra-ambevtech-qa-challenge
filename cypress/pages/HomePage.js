@@ -2,7 +2,6 @@ class HomePage {
   elementos = {
     campoPesquisa: () => cy.get('[data-testid="pesquisar"]'),
     botaoPesquisar: () => cy.get('[data-testid="botaoPesquisar"]'),
-    contadorCarrinho: () => cy.get('[data-testid="listaProdutos"]'),
   };
 
   pesquisarProduto(nome) {

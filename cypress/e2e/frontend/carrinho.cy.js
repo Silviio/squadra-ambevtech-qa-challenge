@@ -1,4 +1,5 @@
 import HomePage from '../../pages/HomePage';
+import ListaDeComprasPage from '../../pages/ListaDeComprasPage';
 import UsuariosApi from '../../support/services/UsuariosApi';
 import { criarUsuario } from '../../support/factories/usuarioFactory';
 
@@ -16,7 +17,7 @@ describe('Frontend - Lista de compras', () => {
       cy.contains(nomeProduto).should('be.visible');
 
       HomePage.adicionarProdutoNaLista(nomeProduto);
-      HomePage.elementos.contadorCarrinho().should('contain.text', '1');
+      ListaDeComprasPage.produtoEstaNaLista(nomeProduto).should('be.visible');
     });
   });
 });
