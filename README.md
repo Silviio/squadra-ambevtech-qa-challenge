@@ -37,6 +37,7 @@ cypress/
 - Login: cadastra um usuário e realiza login com sucesso, validando o token retornado.
 - Usuários: valida a regra de negócio de e-mail duplicado (400).
 - Produtos: cadastra um produto como administrador e confirma via filtro por nome.
+- Produtos (controle de acesso): não permite cadastro sem token (401) nem por usuário sem privilégio de administrador (403).
 
 ### Frontend
 
@@ -61,6 +62,7 @@ npm run cy:run:api   # apenas testes de API
 
 - O ambiente é o servidor público do ServeRest (dados compartilhados e reais), por isso os testes geram usuários/produtos com dados únicos a cada execução, evitando colisão com massa de outras pessoas.
 - O botão **"Editar"** na tela de listagem de produtos do painel admin não está funcional no ambiente atual (não dispara nenhuma ação). Por isso esse fluxo não foi automatizado — é uma limitação da aplicação sob teste, não do código de automação.
+- A tela **"Carrinho"** (`/carrinho`) está "em construção" no ambiente atual. Por isso o cenário de carrinho vai só até adicionar o produto na "Lista de Compras" (o que a aplicação realmente suporta), sem validar a compra em si.
 
 ## Status
 
