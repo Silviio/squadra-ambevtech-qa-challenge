@@ -1,5 +1,7 @@
 # Squadra QA Cypress Challenge
 
+[![Cypress Tests](https://github.com/Silviio/squadra-ambevtech-qa-challenge/actions/workflows/cypress.yml/badge.svg)](https://github.com/Silviio/squadra-ambevtech-qa-challenge/actions/workflows/cypress.yml)
+
 Desafio técnico de QA: automação de testes E2E (frontend) e de API utilizando **Cypress** + **JavaScript**, sobre a aplicação [ServeRest](https://serverest.dev/).
 
 ## Aplicação sob teste
@@ -57,6 +59,10 @@ npm run cy:run       # modo headless (todos os testes)
 npm run cy:run:e2e   # apenas testes de frontend
 npm run cy:run:api   # apenas testes de API
 ```
+
+## CI/CD
+
+O workflow [`cypress.yml`](.github/workflows/cypress.yml) roda os testes de API e frontend em jobs separados a cada push/PR na `main`, usando a [Cypress GitHub Action](https://github.com/cypress-io/github-action). Screenshots (em falha) e vídeos ficam disponíveis como artefatos do job.
 
 ## Observações
 
