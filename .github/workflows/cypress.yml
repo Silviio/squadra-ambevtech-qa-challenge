@@ -7,16 +7,48 @@ on:
     branches: [main]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
   api-tests:
     runs-on: ubuntu-latest
     name: API tests
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
       - name: Run API specs
         uses: cypress-io/github-action@v6
         with:
           spec: cypress/e2e/api/**/*.cy.js
+
+      - name: Upload Mochawesome report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-report
+          path: cypress/reports
+          if-no-files-found: ignore
 
       - name: Upload screenshots on failure
         if: failure()
@@ -28,20 +60,39 @@ jobs:
 
   frontend-tests:
     runs-on: ubuntu-latest
-    name: Frontend (E2E) tests
+    name: Frontend (${{ matrix.browser }})
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
       - name: Run frontend specs
         uses: cypress-io/github-action@v6
         with:
           spec: cypress/e2e/frontend/**/*.cy.js
+          browser: ${{ matrix.browser }}
+
+      - name: Upload Mochawesome report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-report-${{ matrix.browser }}
+          path: cypress/reports
+          if-no-files-found: ignore
 
       - name: Upload screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-screenshots
+          name: frontend-screenshots-${{ matrix.browser }}
           path: cypress/screenshots
           if-no-files-found: ignore
 
@@ -49,6 +100,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-videos
+          name: frontend-videos-${{ matrix.browser }}
           path: cypress/videos
           if-no-files-found: ignore

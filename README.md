@@ -16,6 +16,8 @@ Desafio técnico de QA: automação de testes E2E (frontend) e de API utilizando
 - [@faker-js/faker](https://fakerjs.dev/) para massa de dados dinâmica e realista
 - Padrão Page Object Model (POM) para os testes de frontend
 - Camada de *services* (`UsuariosApi`, `LoginApi`, `ProdutosApi`) para os testes de API
+- [cypress-mochawesome-reporter](https://github.com/LironEr/cypress-mochawesome-reporter) para relatório HTML dos testes
+- [ESLint](https://eslint.org/) (`eslint-plugin-cypress`) para padronização e lint do código
 
 ## Estrutura do projeto
 
@@ -58,11 +60,20 @@ npm run cy:open      # modo interativo
 npm run cy:run       # modo headless (todos os testes)
 npm run cy:run:e2e   # apenas testes de frontend
 npm run cy:run:api   # apenas testes de API
+npm run lint         # valida o código com ESLint
 ```
+
+Após `cy:run`, o relatório HTML fica em `cypress/reports/html/index.html`.
 
 ## CI/CD
 
-O workflow [`cypress.yml`](.github/workflows/cypress.yml) roda os testes de API e frontend em jobs separados a cada push/PR na `main`, usando a [Cypress GitHub Action](https://github.com/cypress-io/github-action). Screenshots (em falha) e vídeos ficam disponíveis como artefatos do job.
+O workflow [`cypress.yml`](.github/workflows/cypress.yml) roda a cada push/PR na `main`:
+
+- **Lint** — valida o código com ESLint.
+- **API tests** — roda os specs de API.
+- **Frontend tests** — roda os specs de frontend em uma matriz **Chrome + Firefox**.
+
+Usa a [Cypress GitHub Action](https://github.com/cypress-io/github-action) e a versão do Node do [`.nvmrc`](.nvmrc). Cada job publica o relatório Mochawesome como artefato; o job de frontend também publica screenshots (em falha) e vídeos.
 
 ## Observações
 
