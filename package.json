@@ -8,14 +8,22 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:run:e2e": "cypress run --spec cypress/e2e/frontend/**/*.cy.js",
-    "cy:run:api": "cypress run --spec cypress/e2e/api/**/*.cy.js"
+    "cy:run:api": "cypress run --spec cypress/e2e/api/**/*.cy.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.5.0",
-    "cypress": "^15.19.0"
+    "cypress": "^15.19.0",
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "eslint": "^10.7.0",
+    "eslint-plugin-cypress": "^6.4.3"
   }
 }
